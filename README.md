@@ -152,3 +152,73 @@ Si tu veux, je peux aussi te fournir **scripts d’automatisation** (Bash ou Pow
 [3]: https://learn.adafruit.com/building-circuitpython/espressif-build?utm_source=chatgpt.com "Espressif Builds | Building CircuitPython | Adafruit Learning System"
 [4]: https://learn.adafruit.com/how-to-add-a-new-board-to-circuitpython/customizing-the-board-files?utm_source=chatgpt.com "Customizing the Board Files | How to Add a New Board to CircuitPython | Adafruit Learning System"
 [5]: https://circuitpython.org/board/m5stack_tab5/?utm_source=chatgpt.com "M5Stack Tab5 IoT Development Kit Download"
+
+
+
+
+
+
+-----------------------
+
+Pour compiler **CircuitPython pour la carte `m5stack_tab5`**, il est important d’utiliser **la bonne version d’ESP-IDF** (le SDK Espressif sur lequel CircuitPython s’appuie).
+
+### ✅ Version recommandée d’ESP-IDF
+
+📌 **CircuitPython (branches récentes, comme 10.x ou 9.x)** utilise **ESP-IDF v5.x**.
+Dans les dépôts et sur GitHub on voit que :
+
+* le port Espressif de CircuitPython a été **mis à jour pour utiliser ESP-IDF 5.4.1** dans les versions récentes. ([GitHub][1])
+* les releases officielles mentionnent **ESP-IDF v5.4.1** comme version intégrée pour la construction Espressif. ([GitHub][2])
+
+👉 Donc **ESP-IDF ≥ v5.4.1** est la version recommandée pour construire CircuitPython (incluant la carte `m5stack_tab5`), que ce soit pour les branches stables ou les versions 10.x récentes.
+
+---
+
+### 🧠 Pourquoi cette version ?
+
+* Les ports CircuitPython/Espressif contiennent des dépendances internes intégrées au sous-module `esp-idf` dans `ports/espressif/esp-idf`.
+* Dans les releases récentes de CircuitPython (comme la 10.0.0), l’ESP-IDF a été **explicitement mis à jour à v5.4.1** pour supporter les chips récents et corriger des bugs. ([GitHub][1])
+
+---
+
+### 🛠️ Conseils pratiques lors de l’installation
+
+✔️ Quand tu fais `./esp-idf/install.sh` à partir du dossier `ports/espressif`, le script télécharge **la version d’ESP-IDF fixée par le repo CircuitPython** (généralement v5.4.1 ou ultérieure).
+✔️ Si tu veux forcer une version spécifique :
+
+```bash
+cd ports/espressif/esp-idf
+git checkout v5.4.1
+./install.sh
+```
+
+Puis :
+
+```bash
+source export.sh
+```
+
+Cela garantit que tu compiles avec **la même version que celle pour laquelle CircuitPython est testé**.
+
+---
+
+### 🧪 Notes sur les cartes basées sur ESP32-P4
+
+Le chip principal du **M5Stack Tab5** est un ESP32-P4, qui est relativement nouveau et peut nécessiter des versions récentes d’ESP-IDF **(>= v5.4)** pour assurer la compatibilité de compilation. ([M5Stack Docs][3])
+
+---
+
+### 📌 Résumé
+
+| **Objectif**                                               | **Version ESP-IDF conseillée**  |
+| ---------------------------------------------------------- | ------------------------------- |
+| Compiler CircuitPython                                     | **v5.4.1** (minimum recommandé) |
+| Tester avec les versions CircuitPython récentes (9.x/10.x) | 🟢 v5.4.1 ou plus récent        |
+
+---
+
+Si tu veux, je peux te montrer comment *forcer la construction avec une version spécifique d’ESP-IDF* (par exemple v5.4.1 versus v5.5.1) et comment régler ça dans ton environnement de build.
+
+[1]: https://github.com/adafruit/circuitpython/issues/10191?utm_source=chatgpt.com "Espressif: Update to ESP-IDF v5.4.1 · Issue #10191"
+[2]: https://github.com/adafruit/circuitpython/releases?utm_source=chatgpt.com "Releases · adafruit/circuitpython"
+[3]: https://docs.m5stack.com/en/esp_idf/m5tab5/userdemo?utm_source=chatgpt.com "m5-docs"
